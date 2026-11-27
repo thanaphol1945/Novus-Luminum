@@ -1,0 +1,6 @@
+{
+  "name": "Novus Luminum — Interactive Anime Studio",
+  "description": "Interactive Thai Anime RPG Studio with AI World Builder, Dynamic Openings, RPG Stats, Map & Lorebook, and Thai Voice Narration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

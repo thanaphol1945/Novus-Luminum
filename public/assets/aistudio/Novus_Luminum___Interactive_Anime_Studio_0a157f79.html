@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<!-- ... existing code ... -->
+    const SANDBOX_GENRE_CHIPS = [
+      'Isekai',
+      'Dark Fantasy',
+      'Seinen Realism',
+      'Action / Survival',
+      'Romance / Drama',
+      'Mystery / Thriller',
+      'Sci-Fi / Cyberpunk',
+      'Academy / Magic',
+      'Political Intrigue',
+      'Slice of Life',
+      'Post-Apocalyptic',
+      'Psychological',
+    ];
+
+    const GENDER_OPTIONS = ['ชาย', 'หญิง', 'ไม่ระบุ'];
+
+    const OPENING_SCENARIO_SEEDS = [
+      'เหตุการณ์ไม่คาดฝันยามค่ำคืนหรือช่วงพลบค่ำที่เปลี่ยนบรรยากาศทันที',
+      'การพบเบาะแส วัตถุปริศนา หรือสัญญาณลับที่ไม่ควรมีอยู่ตรงนั้น',
+      'การเผชิญหน้าหรือบทสนทนาที่ตึงเครียดท่ามกลางสถานที่สำคัญของโลกนี้',
+      'เหตุฉุกเฉินขนาดย่อม สภาพอากาศแปรปรวน หรือความโกลาหลรอบข้างที่บีบให้ต้องตัดสินใจ',
+      'จังหวะเงียบสงบก่อนพายุใหญ่ที่มีข่าวลือหรือข้อเสนอสุดอันตรายเข้ามาเกี่ยวข้อง',
+      'ความเข้าใจผิด การสะกดรอย หรือการถูกจับตามองจากบุคคลปริศนาในพื้นที่',
+      'การถูกดึงเข้าไปพัวพันกับภารกิจลับหรือเหตุการณ์แปลกประหลาดตั้งแต่ก้าวแรก',
+      'การพบปะในสถานที่ที่ไม่คาดคิดพร้อมแรงจูงใจแอบแฝงของฝ่ายตรงข้าม',
+    ];
+
+    const DEFAULT_SETTINGS = {
+<!-- ... existing code ... -->
+        worldRules:
+          'โลกต่างมิติเอเธอร์เรียเปิดกว้างให้ผู้เล่นกำหนดทิศทางได้อิสระ ทั้งการผจญภัย สร้างกิลด์ การเมือง หรือเรื่องราวชีวิตประจำวัน ทุกการตัดสินใจมีผลลัพธ์จริงต่อโลกและตัวละคร',
+        worldBoundaries:
+          'อยู่ภายใต้ธีมต่างโลกแฟนตาซียุคกลาง-เวทมนตร์ กิลด์นักผจญภัย และระบบสเตตัส ห้ามหลุดไปเป็นเทคโนโลยีอวกาศสมัยใหม่',
+        powerSystem: 'ระบบสเตตัส & สกิลอิสระ (Game-like System)',
+        location: 'จัตุรัสศิลาจารึก เมืองชายแดนโอริออน — ยามพลบค่ำ',
+        initialObjective: 'สำรวจเมืองชายแดนและตัดสินใจเส้นทางแรกของคุณในต่างโลก',
+        initialItems: ['เข็มทิศมิติร้าว', 'มีดสั้นเหล็กกล้า', 'เหรียญเงิน 15 เหรียญ'],
+        protagonist: {
+          name: 'เร็น',
+          gender: 'ชาย',
+          role: 'ผู้ข้ามมิติไร้นาม (พัฒนาตามการกระทำ)',
+          appearance: 'ผมดำยุ่งเล็กน้อย ดวงตาสีเทาเข้ม สวมเสื้อคลุมเดินทางสีดำหม่น',
+          persona: 'ช่างสังเกต ปรับตัวไว พูดตรงไปตรงมาตามสถานการณ์',
+        },
+        companion: {
+          name: 'ไคร่า แวนการ์ด',
+          gender: 'หญิง',
+          role: 'ทหารรับจ้างสาวผู้ชำนาญเส้นทางชายแดน',
+          appearance: 'ผมสีเงินตัดสั้นประบ่า ตาสีอำพัน มีรอยแผลเป็นจางๆ ที่โหนกแก้ม สวมเกราะหนังสีเข้ม',
+          personality: 'พูดตรงเป็นธรรมชาติ ไม่ชอบพิธีรีตอง จริงใจกับคนที่ไว้ใจแต่ระวังตัวสูง',
+          initialMood: 'สังเกตการณ์',
+        },
+        openingNarration:
+<!-- ... existing code ... -->
+        worldRules:
+          'ทุกคืนพระจันทร์สีคราม รอยแยกมิติจะเปิดออกในเขตเมืองเก่า นักเรียนฮันเตอร์ต้องออกลาดตระเวนเพื่อปิดรอยแยกก่อนอสูรจะหลุดออกมา',
+        worldBoundaries:
+          'จำกัดอยู่ในบรรยากาศสถาบันฮันเตอร์ เมืองเก่า รอยแยกมิติ และพลังอักขระต้องห้าม โทนอนิเมะแอ็กชันลึกลับร่วมสมัย',
+        powerSystem: 'พลังจิต & อักขระต้องห้าม (Astral Runes)',
+        location: 'ดาดฟ้าหอคอยตะวันตก สถาบันอาร์คาเดีย — คืนฝนพรำ',
+        initialObjective: 'ตรวจสอบสัญญาณรอยแยกมิติระดับ S ที่เพิ่งดังขึ้นในเขตหวงห้าม',
+        initialItems: ['ตราฮันเตอร์ระดับ C', 'ดาบอักขระสีนิล', 'วิทยุสื่อสารเข้ารหัส'],
+        protagonist: {
+          name: 'คิริโตะ ฮายาเตะ',
+          gender: 'ชาย',
+          role: 'นักเรียนฮันเตอร์ชั้นปี 2 ผู้ครอบครองอักขระต้องห้าม',
+          appearance: 'ผมดำปัดข้าง ตาสีน้ำเงินเข้ม สวมเครื่องแบบสถาบันสีกรมท่าทับด้วยแจ็กเก็ตดำ',
+          persona: 'นิ่งขรึม ตัดสินใจเฉียบขาด แต่พร้อมเสี่ยงเพื่อปกป้องพวกพ้อง',
+        },
+        companion: {
+          name: 'เซเลน่า อัลแตร์',
+          gender: 'หญิง',
+          role: 'รองประธานสภาวินัยฮันเตอร์ ระดับ A',
+          appearance: 'ผมยาวสีขาวเงิน ดวงตาสีแดงทับทิม สวมเครื่องแบบสภาวินัยคาดปลอกแขนสีทอง',
+          personality: 'เข้มงวด ฉลาดหลักแหลม ปากแข็งเล็กน้อยแต่ซ่อนความห่วงใยไว้ลึกๆ',
+          initialMood: 'ระแวดระวัง',
+        },
+        openingNarration:
+<!-- ... existing code ... -->
+        worldRules:
+          'จักรวรรดิวัลเทอเรียปกครองด้วย 5 ตระกูลดยุก ข่าวลือในงานเลี้ยงราชสำนักสามารถทำลายทั้งตระกูลได้ภายในข้ามคืน',
+        worldBoundaries:
+          'อยู่ภายใต้กรอบราชสำนักขุนนางยุโรปแฟนตาซี การชิงไหวชิงพริบทางการเมือง เวทมนตร์พันธสัญญา และดราม่าชนชั้นสูง',
+        powerSystem: 'เวทมนตร์แลกเปลี่ยนเท่าเทียม (Mana & Blood Pact)',
+        location: 'ระเบียงสวนกุหลาบ พระราชวังฤดูหนาว — ระหว่างงานเต้นรำ',
+        initialObjective: 'รับมือแผนใส่ร้ายในงานเลี้ยงและเจรจาพันธมิตรกับดัชเชสเอลิเซีย',
+        initialItems: ['แหวนตราประจำตระกูล', 'จดหมายลับปิดผนึกครั่ง', 'ยาแก้พิษขวดจิ๋ว'],
+        protagonist: {
+          name: 'ลูคัส ฟอน คราวน์',
+          gender: 'ชาย',
+          role: 'ทายาทตระกูลมาร์ควิสผู้ถูกมองว่าเป็นคนนอกสายตา',
+          appearance: 'ผมสีน้ำตาลเข้มเรียบหรู ตาสีเขียวมรกต สวมชุดราตรีขุนนางสีดำขลิบทอง',
+          persona: 'เจ้าเล่ห์ อ่านเกมการเมืองขาด สุภาพภายนอกแต่ไม่ยอมถูกใครบงการ',
+        },
+        companion: {
+          name: 'เอลิเซีย เดอ โรเซนเบิร์ก',
+          gender: 'หญิง',
+          role: 'บุตรีดยุกผู้ได้รับฉายา "กุหลาบน้ำแข็ง"',
+          appearance: 'ผมสีทองยาวดัดลอน ตาสีม่วงอเมทิสต์ สวมชุดราตรีสีแดงกำมะหยี่เปิดไหล่',
+          personality: 'หยิ่งทระนง ฉลาดแกมโกง พูดจาเชือดเฉือน แต่จริงใจกับข้อตกลงที่ให้ไว้',
+          initialMood: 'หยั่งเชิง',
+        },
+        openingNarration:
+<!-- ... existing code ... -->
+        worldRules:
+          'เมืองชั้นบนถูกควบคุมโดยบริษัทยักษ์ใหญ่ ขณะที่เขตล่างคือแดนของแฮกเกอร์และนักรับจ้าง ข้อมูลความทรงจำมีค่ามากกว่าทองคำ',
+        worldBoundaries:
+          'อยู่ในธีมไซเบอร์พังก์นีออนนัวร์ปี 2099 เทคโนโลยีแฮกเกอร์ องค์กรเงา และโลกใต้ดิน ห้ามมีเวทมนตร์แฟนตาซี',
+        powerSystem: 'ไซเบอร์เนติกส์ & อาวุธชีวภาพ (Cyberpunk Augments)',
+        location: 'บาร์ใต้ดิน "นีออนโกสต์" เขตชิบุยะล่าง — เวลา 02:14 น.',
+        initialObjective: 'ถอดรหัสชิปความทรงจำก่อนที่หน่วยเก็บกวาดขององค์กรจะตามสัญญาณเจอ',
+        initialItems: ['ชิปความทรงจำเข้ารหัส', 'ปืนพกคลื่นแม่เหล็ก', 'เด็คแฮกเกอร์พกพา'],
+        protagonist: {
+          name: 'จิน ซาโต้',
+          gender: 'ชาย',
+          role: 'อดีตนักสืบไซเบอร์ที่ผันตัวเป็น Fixer อิสระ',
+          appearance: 'ผมดำสั้น ตาซ้ายติดเลนส์สแกนสีฟ้าอ่อน สวมเทรนช์โค้ตกันฝนสีเทาเข้ม',
+          persona: 'เย็นชา ผ่านโลกมาเยอะ ไว้ใจคนยากแต่รักษาคำพูด',
+        },
+        companion: {
+          name: 'มิกะ "ซิโร่" ทากาฮาชิ',
+          gender: 'หญิง',
+          role: 'แฮกเกอร์อัจฉริยะเจ้าของข้อมูลลับ',
+          appearance: 'ผมบ๊อบสีฟ้าอมเขียว สวมแจ็กเก็ตโอเวอร์ไซส์มีไฟนีออนที่ปกคอ และหูฟังคล้องคอ',
+          personality: 'กวนประสาท พูดเร็ว ฉลาดเป็นกรด แต่ตอนนี้กำลังถูกไล่ล่าจนหลังชนฝา',
+          initialMood: 'ตื่นตัว',
+        },
+        openingNarration:
+<!-- ... existing code ... -->
+    function parsePortraitTraits(appearance = '', mood = '', role = '', gender = '') {
+      const text = `${appearance} ${role} ${gender}`.toLowerCase();
+      const moodText = (mood || '').toLowerCase();
+
+      let hair = '#262938';
+      let hairLight = '#464d68';
+      let hairDark = '#151722';
+      if (/(ขาว|เงิน|silver|white)/.test(text)) { hair = '#d7e0ec'; hairLight = '#f8fafc'; hairDark = '#8b9bb4'; }
+      else if (/(ทอง|บลอนด์|gold|blonde)/.test(text)) { hair = '#eab308'; hairLight = '#fef08a'; hairDark = '#a16207'; }
+      else if (/(แดง|ทับทิม|crimson|red)/.test(text)) { hair = '#dc2626'; hairLight = '#f87171'; hairDark = '#7f1d1d'; }
+      else if (/(ฟ้า|เขียว|cyan|teal|blue)/.test(text)) { hair = '#06b6d4'; hairLight = '#67e8f9'; hairDark = '#0e7490'; }
+      else if (/(ชมพู|pink)/.test(text)) { hair = '#ec4899'; hairLight = '#f9a8d4'; hairDark = '#9d174d'; }
+      else if (/(ม่วง|purple)/.test(text)) { hair = '#7c3aed'; hairLight = '#c4b5fd'; hairDark = '#4c1d95'; }
+      else if (/(น้ำตาล|brown)/.test(text)) { hair = '#6b4226'; hairLight = '#a47148'; hairDark = '#3d2414'; }
+
+      let eye = '#38bdf8';
+      if (/(แดง|ทับทิม|crimson|red)/.test(text)) eye = '#f43f5e';
+      else if (/(ทอง|อำพัน|amber|gold)/.test(text)) eye = '#f59e0b';
+      else if (/(ม่วง|อเมทิสต์|purple)/.test(text)) eye = '#a855f7';
+      else if (/(เขียว|มรกต|green)/.test(text)) eye = '#10b981';
+      else if (/(เทา|เงิน|gray|silver)/.test(text)) eye = '#94a3b8';
+
+      const isLongHair = /(ยาว|ดัดลอน|ประบ่า|บ๊อบ|หญิง|สาว|บุตรี|ดัชเชส|female)/.test(text) && !/(ผมสั้นเกรียน|ชายหนุ่ม)/.test(text);
+      const hasScar = /(แผลเป็น|scar)/.test(text);
+      const hasCyberLens = /(เลนส์|สแกน|ไซเบอร์|cyber|หูฟัง)/.test(text);
+      const outfitType = /(ราตรี|ขุนนาง|ดยุก|กำมะหยี่)/.test(text)
+        ? 'royal'
+        : /(เกราะ|ทหาร|ฮันเตอร์)/.test(text)
+        ? 'armor'
+        : /(ไซเบอร์|นีออน|แจ็กเก็ต)/.test(text)
+        ? 'cyber'
+        : 'coat';
+
+      let expression = 'neutral';
+      if (/(ยิ้ม|สุข|เปิดใจ|อ่อนโยน|อบอุ่น|เขิน|รัก|หวั่นไหว)/.test(moodText)) expression = 'warm';
+      else if (/(โกรธ|ตื่นตัว|ระแวดระวัง|อันตราย|เครียด|ดุดัน|เดือด)/.test(moodText)) expression = 'intense';
+      else if (/(หยั่งเชิง|เจ้าเล่ห์|สนุก|มั่นใจ)/.test(moodText)) expression = 'smirk';
+
+      return { hair, hairLight, hairDark, eye, isLongHair, hasScar, hasCyberLens, outfitType, expression };
+    }
+
+    function AnimePortrait({ name, appearance, role, gender, mood, emotionKey, tension = 25, customImageUrl, size = 'md', onGenerateAi, isGenerating }) {
+      const traits = useMemo(() => parsePortraitTraits(appearance, mood, role, gender), [appearance, mood, role, gender]);
+      const uid = useMemo(() => `nl-${(name || 'c').replace(/[^a-zA-Z0-9]/g, '')}-${Math.floor(Math.random() * 9999)}`, [name]);
+<!-- ... existing code ... -->
+        cast: comp
+          ? [{
+              id: 'primary-companion',
+              name: comp.name,
+              gender: comp.gender || 'ไม่ระบุ',
+              role: comp.role || 'คู่บทบาทหลัก',
+              appearance: comp.appearance || '',
+              mood: comp.initialMood || 'สังเกตการณ์',
+              isPrimary: true,
+            }]
+          : [],
+        memories: [
+          `เริ่มต้นเรื่องราวใน "${world.title}" ณ ${world.location || 'จุดเริ่มต้น'}`,
+          comp ? `พบกับ ${comp.name} (${comp.role})` : 'เริ่มต้นการเดินทางแบบฉายเดี่ยว (Solo Journey)',
+        ],
+        messages: [
+          {
+            id: `narrator-init-${Date.now()}`,
+            sender: 'narrator',
+            turn: 1,
+            text:
+              world.openingNarration ||
+              (comp
+                ? `*สายลมพัดผ่านฉากเปิดเรื่องของ ${world.title}*\n\n*${comp.name} หันมามองคุณแล้วเอ่ยทักทายด้วยน้ำเสียงเป็นธรรมชาติ*`
+                : `*สายลมพัดผ่าน${world.location || 'ดินแดนที่ไม่คุ้นเคย'}ในโลก ${world.title} คุณยืนอยู่เพียงลำพังพร้อมเส้นทางข้างหน้าที่รอให้คุณลิขิตเอง*`),
+            scenarioTag: world.scenarioTag || '',
+            engineLabel: 'PROLOGUE',
+          },
+        ],
+<!-- ... existing code ... -->
+      const castSummary = (session.cast || []).length > 0
+        ? session.cast.map((c) => `- ${c.name} (เพศ: ${c.gender || 'ไม่ระบุ'} | ${c.role}) | อารมณ์: ${c.mood}${c.appearance ? ` | รูปลักษณ์: ${c.appearance}` : ''}`).join('\n')
+        : '(ยังไม่มีคู่บทบาท — ผู้เล่นกำลังเดินทางฉายเดี่ยว สามารถเปิดตัวตัวละครใหม่ตามธรรมชาติได้หากเหมาะสม)';
+
+      const loreSummary = (session.lorebook || []).length > 0
+        ? session.lorebook.map((l) => `- [${l.title}]: ${l.detail}`).join('\n')
+        : '(ไม่มีบันทึกเพิ่มเติม)';
+
+      const rpg = session.rpg || buildInitialRpgState(session.world);
+      const rpgSummary = `LV.${rpg.level} (XP ${rpg.xp}/${rpg.xpToNext}) | HP ${rpg.hp}/${rpg.maxHp} | MP ${rpg.mp}/${rpg.maxMp} | Gold ${rpg.gold}G | STR:${rpg.stats.str} AGI:${rpg.stats.agi} INT:${rpg.stats.int} CHA:${rpg.stats.cha} LCK:${rpg.stats.lck}
+สกิลที่มี: ${(rpg.skills || []).map((s) => `${s.name}(${s.mpCost}MP)`).join(', ') || 'ไม่มี'}
+เควสที่กำลังทำ: ${(rpg.quests || []).filter((q) => q.status === 'active').map((q) => q.title).join(', ') || 'ไม่มี'}`;
+
+      const systemPrompt = `คุณคือผู้กำกับและนักเขียนบทอนิเมะ RPG ระดับมาสเตอร์ของ "${APP_NAME}"
+ข้อมูลโลก:
+- ชื่อเรื่อง: ${session.world.title} (${session.world.genre})
+- กฎของโลก: ${session.world.worldRules || 'ยึดความสมเหตุสมผล'}
+- ขอบเขตของโลก (ห้ามออกนอกกรอบนี้): ${session.world.worldBoundaries || session.world.worldRules || 'รักษาธีมและกฎของโลกอย่างเคร่งครัด'}
+- ระบบพลัง: ${session.world.powerSystem || 'ตามบริบทของโลก'}
+- สถานที่ปัจจุบัน: ${session.location}
+- เป้าหมายปัจจุบัน: ${session.objective}
+- ไอเทมที่ตัวเอกมี: ${(session.items || []).join(', ') || 'ไม่มี'}
+
+สถานะ RPG ตัวเอก:
+${rpgSummary}
+
+ตัวเอก (ผู้เล่น — บทบาท/สายพลังและนิสัยสามารถพัฒนาเปลี่ยนแปลงได้ตามการกระทำจริง):
+- ชื่อ: ${session.world.protagonist.name}
+- เพศ: ${session.world.protagonist.gender || 'ไม่ระบุ'} (ใช้สรรพนามและคำลงท้ายให้สอดคล้องกับเพศ)
+- บทบาท/สายพลังปัจจุบัน: ${session.world.protagonist.role}
+- รูปลักษณ์: ${session.world.protagonist.appearance || 'ตามเนื้อเรื่อง'}
+- นิสัยปัจจุบัน: ${session.world.protagonist.persona}
+
+ตัวละครในเรื่อง:
+<!-- ... existing code ... -->
+    async function callGeminiWorldBuilder({ promptText, proName, proGender, hasCompanion, compName, compGender, boundaries, settings }) {
+      const model = settings.geminiModel || 'gemini-3-flash-preview';
+      const endpoint = getGeminiEndpoint(model, settings.geminiApiKey);
+      const uniqueSeed = Math.floor(Math.random() * 900000) + 100000;
+      const scenarioSeed = OPENING_SCENARIO_SEEDS[Math.floor(Math.random() * OPENING_SCENARIO_SEEDS.length)];
+
+      const compDirective = hasCompanion
+        ? `สร้างตัวละครคู่บทบาทเริ่มต้น 1 คน${compName ? ` โดยใช้ชื่อ "${compName}"` : ' (คิดชื่อที่เข้ากับโลกให้เลย)'}${compGender ? ` เพศ "${compGender}"` : ' (เลือกเพศที่เหมาะสม)'} พร้อมออกแบบบทบาท รูปลักษณ์ บุคลิก และอารมณ์เริ่มต้นทั้งหมดให้ครบ`
+        : 'ผู้เล่นเลือกเล่นแบบฉายเดี่ยว (Solo Journey) ไม่ต้องสร้างคู่บทบาทเริ่มต้น ให้ companion เป็น null และในฉากเปิดเรื่องตัวเอกต้องเริ่มต้นเพียงลำพัง';
+
+      const prompt = `คุณคือหัวหน้านักออกแบบโลกและตัวละครอนิเมะ RPG (AI-First World Architect) [Seed #${uniqueSeed}]
+จงออกแบบโลกอนิเมะสวมบทบาทภาษาไทยให้ครบสมบูรณ์ โดยอิงจากข้อมูลหลักที่ผู้เล่นกำหนดดังนี้:
+- ไอเดียโลก / Prompt: "${promptText || 'โลกอนิเมะแฟนตาซีผจญภัยที่เต็มไปด้วยปริศนาและการตัดสินใจ'}"
+- ขอบเขตที่ผู้เล่นกำหนดเพิ่มเติม: "${boundaries || 'กำหนดขอบเขตธีมและกฎเหล็กให้ชัดเจนตามไอเดียโลก เพื่อไม่ให้เรื่องหลุดธีม'}"
+- ชื่อตัวเอก (ต้องใช้ชื่อนี้): "${proName}"
+- เพศตัวเอก (ต้องใช้เพศนี้): "${proGender || 'ไม่ระบุ'}"
+- คู่บทบาท: ${compDirective}
+- แนวทางสถานการณ์เปิดฉากสำหรับรอบนี้: "${scenarioSeed}"
+
+เงื่อนไขสำคัญ:
+1. AI เป็นผู้คิดรายละเอียดทั้งหมดของโลกและตัวละครแทนผู้เล่น (ชื่อเรื่อง, แนวเรื่อง, กฎของโลก, ขอบเขตของโลก, ระบบพลัง, สถานที่, รูปลักษณ์ตัวเอกที่เข้ากับเพศและโลก, ไอเทมเริ่มต้น, ฉากเปิดเรื่อง) ยกเว้นชื่อและเพศที่ผู้เล่นเลือกไว้ห้ามเปลี่ยนแปลง
+2. ตัวเอกให้เริ่มด้วยบทบาท/สายพลังและนิสัยแบบเปิดกว้างที่พร้อมพัฒนาตามการกระทำของผู้เล่น
+3. เขียนฉากเปิดเรื่องภาษาไทย 2-3 ย่อหน้า ใช้ *...* สำหรับบรรยาย และ "..." สำหรับบทสนทนา
+
+ตอบเป็น JSON เท่านั้น:
+{
+  "title": "ชื่อโลก/ชื่อเรื่องอนิเมะที่น่าดึงดูด",
+  "genre": "แนวเรื่องสั้นๆ คั่นด้วย •",
+  "worldRules": "กฎของโลกและบรรยากาศ 1-2 ประโยค",
+  "worldBoundaries": "ขอบเขตสำคัญของโลกนี้ (ธีมที่อนุญาต/ห้ามหลุดกรอบ เพื่อให้การเริ่มใหม่ทุกครั้งอยู่ในขอบเขตเดียวกัน)",
+  "powerSystem": "ระบบพลังหรือกติกาของโลก",
+  "location": "สถานที่เปิดฉาก",
+  "initialObjective": "เป้าหมายเริ่มต้น",
+  "initialItems": ["ไอเทม 1", "ไอเทม 2", "ไอเทม 3"],
+  "scenarioTag": "ชื่อสั้นๆ ของสถานการณ์เปิดฉากรอบนี้ (3-6 คำ)",
+  "protagonist": { "name": "${proName}", "gender": "${proGender || 'ไม่ระบุ'}", "role": "จุดเริ่มต้น/สายพลังเริ่มต้น", "appearance": "รูปลักษณ์สีผม สีตา ทรงผม และชุดที่เข้ากับเพศและโลก", "persona": "นิสัยเริ่มต้นแบบเปิดกว้าง" },
+  "companion": ${hasCompanion ? `{ "name": "${compName || 'คิดชื่อให้เหมาะสม'}", "gender": "${compGender || 'หญิง'}", "role": "บทบาท", "appearance": "รูปลักษณ์สีผม สีตา และชุด", "personality": "บุคลิก", "initialMood": "อารมณ์แรก" }` : 'null'},
+  "openingNarration": "ฉากเปิดเรื่อง 2-3 ย่อหน้า ใช้ *...* บรรยายและ \"...\" สำหรับคำพูด",
+  "initialSuggestions": ["ตัวเลือก 1", "ตัวเลือก 2", "ตัวเลือก 3"]
+}`;
+
+      const res = await fetchWithBackoff(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.95, responseMimeType: 'application/json' },
+        }),
+      });
+      const data = await res.json();
+      const parsed = extractJsonObject(data?.candidates?.[0]?.content?.parts?.[0]?.text || '');
+      if (!parsed || !parsed.title) throw new Error('Invalid world builder JSON');
+
+      // Enforce user-chosen Name & Gender strictly
+      parsed.protagonist = {
+        ...(parsed.protagonist || {}),
+        name: proName,
+        gender: proGender || 'ไม่ระบุ',
+      };
+      if (hasCompanion && parsed.companion) {
+        parsed.companion = {
+          ...parsed.companion,
+          name: compName ? compName : parsed.companion.name || 'คู่หูนิรนาม',
+          gender: compGender ? compGender : parsed.companion.gender || 'ไม่ระบุ',
+        };
+      } else {
+        parsed.companion = null;
+      }
+      return parsed;
+    }
+
+    function buildLocalWorldFromPrompt({ promptText, proName, proGender, hasCompanion, compName, compGender, boundaries }) {
+      const cleanPrompt = (promptText || '').trim();
+      const shortTitle = cleanPrompt ? `${cleanPrompt.slice(0, 26)}${cleanPrompt.length > 26 ? '…' : ''}` : 'Chronicles of New Lumen';
+      const defaultApp =
+        proGender === 'หญิง'
+          ? 'ผมยาวสีดำขลับ ดวงตาคมสีฟ้าอมเทา สวมเสื้อคลุมเดินทางเข้ารูปสีเข้ม'
+          : proGender === 'ชาย'
+          ? 'ผมสั้นสีดำยุ่งเล็กน้อย ดวงตาสีเทาเข้ม สวมเสื้อคลุมเดินทางสีดำหม่น'
+          : 'ผมประบ่าสีเงินหม่น ดวงตาสีอำพัน สวมชุดคลุมลึกลับสีกรมท่า';
+
+      return {
+        title: shortTitle,
+        genre: 'Anime RPG • Custom World',
+        worldRules: cleanPrompt || 'โลกใบใหม่ที่ทุกการกระทำของผู้เล่นกำหนดชะตากรรมของเรื่องราว',
+        worldBoundaries: boundaries || cleanPrompt || 'ยึดบรรยากาศและกฎของโลกที่สร้างขึ้นอย่างเคร่งครัด',
+        powerSystem: 'พัฒนาสายพลังและสกิลตามการกระทำของผู้เล่น',
+        location: 'จุดเริ่มต้นแห่งโชคชะตา — ยามค่ำคืน',
+        initialObjective: 'สำรวจสภาพแวดล้อมและค้นหาจุดเริ่มต้นของปริศนาในโลกนี้',
+        initialItems: ['ของติดตัวปริศนา', 'แผนที่เก่าขาดวิ่น', 'เหรียญติดตัว'],
+        scenarioTag: 'จุดเริ่มต้นบทใหม่',
+        protagonist: {
+          name: proName,
+          gender: proGender || 'ไม่ระบุ',
+          role: 'ผู้เริ่มต้นเส้นทาง (พัฒนาตามการกระทำ)',
+          appearance: defaultApp,
+          persona: 'ปรับเปลี่ยนตามการตัดสินใจของคุณ',
+        },
+        companion: hasCompanion
+          ? {
+              name: compName || (compGender === 'ชาย' ? 'เรย์ คาริส' : 'อาริสะ ลูเมน'),
+              gender: compGender || 'หญิง',
+              role: 'พันธมิตรผู้ร่วมชะตากรรม',
+              appearance: compGender === 'ชาย' ? 'ผมสีเงินสั้น ตาสีทอง สวมแจ็กเก็ตเกราะเบา' : 'ผมยาวสีขาวเงิน ตาสีอเมทิสต์ สวมชุดคลุมนักเดินทาง',
+              personality: 'ช่างสังเกต พูดตรงไปตรงมา และซ่อนความลับบางอย่างไว้',
+              initialMood: 'สังเกตการณ์',
+            }
+          : null,
+        openingNarration: '',
+        initialSuggestions: [],
+      };
+    }
+
+    async function callGeminiDynamicOpening(world, settings, previousSnippet = '') {
+      const model = settings.geminiModel || 'gemini-3-flash-preview';
+      const endpoint = getGeminiEndpoint(model, settings.geminiApiKey);
+      const runSeed = Math.floor(Math.random() * 999999) + 100000;
+      const scenarioAngle = OPENING_SCENARIO_SEEDS[Math.floor(Math.random() * OPENING_SCENARIO_SEEDS.length)];
+      const hasComp = world.hasCompanion !== false && Boolean(world.companion && world.companion.name);
+      const comp = hasComp ? world.companion : null;
+
+      const prompt = `คุณคือผู้กำกับฉากเปิดเรื่องอนิเมะ RPG ของ "${APP_NAME}" [New Run Seed #${runSeed}]
+ภารกิจ: สร้าง "สถานการณ์เปิดฉากและบทสนทนาใหม่ทั้งหมด" สำหรับการเริ่มเล่นรอบใหม่ของโลกนี้ โดยต้องแตกต่างจากรอบก่อนๆ อย่างชัดเจน แต่ยังอยู่ภายใต้ขอบเขตและกฎของโลกนี้อย่างเคร่งครัด!
+
+ข้อมูลและขอบเขตของโลก:
+- ชื่อโลก: ${world.title}
+- แนวเรื่อง: ${world.genre}
+- กฎของโลก: ${world.worldRules || 'ยึดความสมเหตุสมผลตามธีมโลก'}
+- ขอบเขตของโลก (ห้ามหลุดกรอบนี้เด็ดขาด): ${world.worldBoundaries || world.worldRules || world.genre}
+- ระบบพลัง: ${world.powerSystem || 'ตามบริบทของโลก'}
+- สถานที่หลักอ้างอิง: ${world.location || 'พื้นที่เริ่มต้นของโลก'}
+
+ตัวเอก (ผู้เล่น):
+- ชื่อ: ${world.protagonist?.name || 'ตัวเอก'}
+- เพศ: ${world.protagonist?.gender || 'ไม่ระบุ'}
+- บทบาท: ${world.protagonist?.role || 'ผู้เริ่มต้นเส้นทาง'}
+- รูปลักษณ์: ${world.protagonist?.appearance || 'ตามเนื้อเรื่อง'}
+
+คู่บทบาทเริ่มต้น:
+${comp ? `- ชื่อ: ${comp.name} (เพศ: ${comp.gender || 'ไม่ระบุ'}) | บทบาท: ${comp.role} | บุคลิก: ${comp.personality || ''} | รูปลักษณ์: ${comp.appearance || ''}` : '- ไม่มีคู่บทบาทเริ่มต้น (โหมดฉายเดี่ยว Solo Journey — ห้ามบังคับให้มีคู่หูประจำตัว แต่สามารถมีบรรยากาศผู้คนรอบข้างหรือเหตุการณ์ปริศนาได้)'}
+
+โจทย์ความแตกต่างของรอบนี้:
+- มุมมองเหตุการณ์ที่ต้องสุ่มใช้รอบนี้: "${scenarioAngle}"
+${previousSnippet ? `- ห้ามซ้ำกับฉากเปิดรอบก่อนหน้านี้เด็ดขาด: "${previousSnippet.slice(0, 180)}"` : ''}
+${buildDialogueAndToneDirectives(settings)}
+
+ตอบเป็น JSON เท่านั้น:
+{
+  "scenarioTag": "ชื่อฉากเปิดสั้นๆ เฉพาะรอบนี้ (3-6 คำ)",
+  "location": "สถานที่เปิดฉากและช่วงเวลาเฉพาะรอบนี้ (ต้องเข้ากับโลกและขอบเขต)",
+  "mood": "อารมณ์บรรยากาศเริ่มต้น 1-3 คำ",
+  "emotion": "เลือก 1 ค่าจาก: blush, warm, angry, action, shock, sad, smirk, mystery, neutral",
+  "objective": "เป้าหมายเฉพาะหน้าของฉากเปิดรอบนี้",
+  "openingNarration": "บทบรรยายและบทสนทนาเปิดฉากภาษาไทย 2-3 ย่อหน้า ใช้ *...* บรรยายและ \"...\" สำหรับบทสนทนา เปิดจังหวะให้ผู้เล่นตอบโต้ต่อ",
+  "suggestedActions": ["ทางเลือก 1", "ทางเลือก 2", "ทางเลือก 3"]
+}`;
+
+      const res = await fetchWithBackoff(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 1.0, responseMimeType: 'application/json' },
+        }),
+      });
+      const data = await res.json();
+      const parsed = extractJsonObject(data?.candidates?.[0]?.content?.parts?.[0]?.text || '');
+      if (!parsed || !parsed.openingNarration) throw new Error('Invalid dynamic opening JSON');
+
+      const resolvedEmo =
+        parsed.emotion && EMOTION_PROFILES[String(parsed.emotion).toLowerCase()]
+          ? String(parsed.emotion).toLowerCase()
+          : detectEmotionFromText(String(parsed.openingNarration), parsed.mood || '').key;
+
+      return {
+        scenarioTag: String(parsed.scenarioTag || 'ฉากเปิดสุ่มใหม่').trim(),
+        location: String(parsed.location || world.location || 'จุดเริ่มต้น').trim(),
+        mood: String(parsed.mood || comp?.initialMood || 'ตื่นตัว').trim(),
+        emotion: resolvedEmo,
+        objective: String(parsed.objective || world.initialObjective || 'สำรวจสถานการณ์ตรงหน้า').trim(),
+        openingNarration: String(parsed.openingNarration).trim(),
+        suggestedActions:
+          Array.isArray(parsed.suggestedActions) && parsed.suggestedActions.length >= 2
+            ? parsed.suggestedActions.slice(0, 3).map((s) => String(s).trim())
+            : world.initialSuggestions || [],
+        engineLabel: `DYNAMIC OPENING • ${model.replace('-preview', '').toUpperCase()}`,
+      };
+    }
+
+    function generateLocalDynamicOpening(world) {
+      const hasComp = world.hasCompanion !== false && Boolean(world.companion?.name);
+      const comp = hasComp ? world.companion : null;
+      const pro = world.protagonist || { name: 'ตัวเอก', gender: 'ไม่ระบุ' };
+      const baseLoc = (world.location || 'พื้นที่เริ่มต้น').split('—')[0].trim();
+
+      const variants = [
+        {
+          scenarioTag: 'สัญญาณลับใต้เงามืด',
+          time: 'ยามดึกหลังฝนซา',
+          mood: 'ระแวดระวัง',
+          emotion: 'mystery',
+          objective: `แกะรอยสัญญาณปริศนาที่เพิ่งปรากฏรอบ${baseLoc}`,
+          soloText: `*หมอกบางลอยต่ำปกคลุม${baseLoc}ในยามดึกหลังฝนซา กลิ่นอายเฉพาะตัวของโลก "${world.title}" แผ่ซ่านอยู่ในอากาศเงียบงัน*\n\n*ขณะที่คุณ (${pro.name}) กำลังตรวจสอบรอบข้าง วัตถุประหลาดชิ้นหนึ่งกลับเรืองแสงวูบวาบขึ้นใกล้ปลายเท้า พร้อมเสียงฝีเท้าแผ่วเบาที่หยุดลงตรงมุมอับไม่ไกลนัก*`,
+          compText: `*หมอกบางลอยต่ำปกคลุม${baseLoc}ในยามดึกหลังฝนซา แสงไฟริบหรี่สะท้อนเงาของใครบางคนที่กำลังรีบเดินเข้ามา*\n\n*${comp?.name}ชะลอฝีเท้าลงตรงหน้าคุณ สีหน้าเต็มไปด้วยความระแวดระวัง* "${pro.name}... โชคดีที่เจอตัวก่อน รอบนี้สถานการณ์มันไม่เหมือนปกติเลย ฉันเพิ่งเห็นร่องรอยแปลกๆ แถวนี้ เราต้องรีบตัดสินใจแล้วว่าจะตามรอยไปหรือเปลี่ยนเส้นทาง"`,
+        },
+        {
+          scenarioTag: 'ข้อเสนอที่คาดไม่ถึง',
+          time: 'ยามสายท่ามกลางความวุ่นวาย',
+          mood: 'หยั่งเชิง',
+          emotion: 'smirk',
+          objective: `ประเมินข้อเสนอและหาความจริงเบื้องหลังความเคลื่อนไหวใน${baseLoc}`,
+          soloText: `*เสียงผู้คนและแรงสั่นสะเทือนของเหตุการณ์บางอย่างดังก้องทั่ว${baseLoc} ในช่วงเวลานี้ทุกคนต่างรีบเร่งราวกับมีข่าวใหญ่เพิ่งแพร่สะพัด*\n\n*ซองสารปิดผนึกไร้ชื่อถูกสอดไว้ข้างตัวคุณตั้งแต่เมื่อไหร่ไม่รู้ ข้อความสั้นๆ ด้านในท้าทายให้ ${pro.name} เลือกข้างก่อนที่เวลาจะหมดลง*`,
+          compText: `*ท่ามกลางความวุ่นวายของ${baseLoc} ${comp?.name}เดินแทรกฝูงชนเข้ามาหยุดข้างคุณพร้อมยิ้มมุมปากแบบอ่านใจไม่ออก*\n\n"ดูเหมือนวันนี้ดวงเราจะสมพงษ์กับเรื่องยุ่งยากนะ ${pro.name}" *${comp?.name}ลดเสียงลงให้ได้ยินกันแค่สองคน* "มีคนกำลังตามหาตัวคนที่มีคุณสมบัติแบบพวกเราอยู่พอดี... สนใจจะลองฟังข้อเสนอ หรือจะชิงลงมือก่อนล่ะ?"`,
+        },
+        {
+          scenarioTag: 'เหตุวิกฤตเฉพาะหน้า',
+          time: 'ช่วงพลบค่ำฟ้าเปลี่ยนสี',
+          mood: 'ตื่นตัวสูง',
+          emotion: 'action',
+          objective: `รับมือความโกลาหลกะทันหันที่เกิดขึ้น ณ ${baseLoc}`,
+          soloText: `*ท้องฟ้าเหนือ${baseLoc}เปลี่ยนสีฉับพลันพร้อมแรงกดดันประหลาดที่สอดคล้องกับกฎของ "${world.title}" เสียงเตือนภัยดังแทรกความเงียบ*\n\n*${pro.name}ตั้งหลักอย่างรวดเร็ว เบื้องหน้ามีสองเส้นทาง—ทางหนึ่งนำไปสู่ต้นตอของเหตุการณ์ ส่วนอีกทางคือจุดซุ่มดูสถานการณ์ที่ปลอดภัยกว่า*`,
+          compText: `*แรงสั่นสะเทือนเบาๆ แล่นผ่านพื้นใต้เท้าที่${baseLoc} ${comp?.name}ขยับตัวเข้ามาตั้งท่าพร้อมรับมือทันที*\n\n"เฮ้ ${pro.name}! อย่าเพิ่งเหม่อสิ ดูตรงนั้น!" *${comp?.name}ชี้ไปยังจุดที่บรรยากาศเริ่มบิดเบี้ยวผิดปกติ* "ถ้าปล่อยไว้แบบนี้เรื่องบานปลายแน่ นายจะบุกเข้าไปจัดการตรงๆ หรือให้ฉันช่วยเปิดทางให้ก่อนดี?"`,
+        },
+        {
+          scenarioTag: 'บทสนทนาใต้แสงจันทร์',
+          time: 'คืนเดือนหงายเงียบสงัด',
+          mood: 'สงบนิ่ง',
+          emotion: 'warm',
+          objective: `เตรียมความพร้อมและวางแผนก้าวต่อไปจาก${baseLoc}`,
+          soloText: `*แสงจันทร์สาดส่องลงบน${baseLoc}อย่างเงียบสงบ เป็นช่วงเวลาไม่กี่นาทีที่ความวุ่นวายของ "${world.title}" ดูเหมือนจะหยุดนิ่ง*\n\n*แต่ในความสงบนี้เอง ${pro.name}กลับสังเกตเห็นเงาความเคลื่อนไหวไกลออกไป ซึ่งเป็นจุดเริ่มต้นของเส้นทางใหม่ที่กำลังรออยู่*`,
+          compText: `*ลมเย็นยามค่ำคืนพัดผ่าน${baseLoc}อย่างแผ่วเบา ${comp?.name}หันมามองคุณด้วยแววตาที่ผ่อนคลายกว่าปกติเล็กน้อย*\n\n"คืนนี้เงียบแปลกๆ นะว่าไหม ${pro.name}?" *${comp?.name}เอนหลังพิงกำแพงพลางหันมาสบตา* "ก่อนที่เรื่องวุ่นวายรอบใหม่จะเริ่มขึ้น... อยากคุยเรื่องแผนของเรา หรือมีอะไรที่นายอยากถามฉันก่อนไหม?"`,
+        },
+      ];
+
+      const pick = variants[Math.floor(Math.random() * variants.length)];
+      const loc = `${baseLoc} — ${pick.time}`;
+      return {
+        scenarioTag: pick.scenarioTag,
+        location: loc,
+        mood: pick.mood,
+        emotion: pick.emotion,
+        objective: pick.objective,
+        openingNarration: comp ? pick.compText : pick.soloText,
+        suggestedActions: comp
+          ? [
+              `*สบตา${comp.name}แล้วตอบกลับอย่างมั่นใจ* "งั้นลุยกันเลย ฉันไม่ปล่อยให้โอกาสนี้หลุดมือแน่"`,
+              `*กวาดตามองรอบ${baseLoc}อย่างละเอียด* "เดี๋ยวก่อน ลองตรวจสอบสถานการณ์รอบข้างให้แน่ใจก่อนดีกว่า"`,
+              `*ถามกลับด้วยน้ำเสียงจริงจัง* "แล้วเธอรู้เบื้องหลังของเรื่องนี้มากแค่ไหนกันแน่ ${comp.name}?"`,
+            ]
+          : [
+              `*เดินเข้าไปตรวจสอบต้นตอของเหตุการณ์ตรงหน้าอย่างไม่ลังเล*`,
+              `*ถอยเข้ามุมอับเพื่อซุ่มสังเกตการณ์และเก็บข้อมูลก่อนลงมือ*`,
+              `*เตรียมอาวุธและตรวจสอบอุปกรณ์ติดตัวให้พร้อมรับมือทุกสถานการณ์*`,
+            ],
+        engineLabel: 'DYNAMIC OPENING • OFFLINE',
+      };
+    }
+
+    async function generateAiImageWithGemini(promptText, apiKey) {
+<!-- ... existing code ... -->
+      const [inputText, setInputText] = useState('');
+      const [inputMode, setInputMode] = useState('ic');
+      const [isGenerating, setIsGenerating] = useState(false);
+      const [isGeneratingOpening, setIsGeneratingOpening] = useState(false);
+      const [isRefreshingSug, setIsRefreshingSug] = useState(false);
+<!-- ... existing code ... -->
+      const [showCreatorModal, setShowCreatorModal] = useState(false);
+      const [aiWorldPrompt, setAiWorldPrompt] = useState('');
+      const [isBuildingWorldAi, setIsBuildingWorldAi] = useState(false);
+      const [showAdvancedCreator, setShowAdvancedCreator] = useState(false);
+      const [formHasCompanion, setFormHasCompanion] = useState(false);
+      const [formWorldTitle, setFormWorldTitle] = useState('');
+      const [formGenre, setFormGenre] = useState('Dark Fantasy • Action • Romance');
+      const [formWorldRules, setFormWorldRules] = useState('');
+      const [formWorldBoundaries, setFormWorldBoundaries] = useState('');
+      const [formPowerSystem, setFormPowerSystem] = useState('');
+      const [formProName, setFormProName] = useState('');
+      const [formProGender, setFormProGender] = useState('ชาย');
+      const [formProAppearance, setFormProAppearance] = useState('');
+      const [formCompName, setFormCompName] = useState('');
+      const [formCompGender, setFormCompGender] = useState('หญิง');
+      const [formCompRole, setFormCompRole] = useState('');
+      const [formCompAppearance, setFormCompAppearance] = useState('');
+      const [formCompPersona, setFormCompPersona] = useState('');
+      const [formLocation, setFormLocation] = useState('ลานกว้างใต้แสงจันทร์');
+      const [formOpening, setFormOpening] = useState('');
+      const [formScenarioTag, setFormScenarioTag] = useState('');
+      const [formInitSuggestions, setFormInitSuggestions] = useState([]);
+      const [formInitItems, setFormInitItems] = useState([]);
+      const [formAiReady, setFormAiReady] = useState(false);
+
+      const [showSavesModal, setShowSavesModal] = useState(false);
+<!-- ... existing code ... -->
+      const startWorldWithDynamicOpening = async (world, options = {}) => {
+        const { skipDynamicCall = false, prevSnippet = '' } = options;
+        const baseSession = createInitialSession(world);
+        setSceneImages({});
+        setPortraitImages({});
+        autoPortraitKeysRef.current.clear();
+        setMobileSidebarOpen(false);
+        setActiveTab('play');
+
+        if (skipDynamicCall && world.openingNarration) {
+          setSession(baseSession);
+          showToast(`เข้าสู่โลก "${world.title}" แล้ว`, 'success');
+          return;
+        }
+
+        const loadingSession = {
+          ...baseSession,
+          messages: [
+            {
+              ...baseSession.messages[0],
+              text: `*กำลังสร้างสถานการณ์เปิดฉากและบทสนทนาใหม่เฉพาะรอบนี้ ภายใต้ขอบเขตของโลก "${world.title}"...*`,
+              scenarioTag: 'กำลังสุ่มสถานการณ์ใหม่',
+              engineLabel: 'GENERATING OPENING...',
+              isOpeningLoading: true,
+            },
+          ],
+        };
+        setSession(loadingSession);
+        setIsGeneratingOpening(true);
+
+        try {
+          let opening;
+          if (settings.aiEnabled) {
+            try {
+              opening = await callGeminiDynamicOpening(world, settings, prevSnippet);
+            } catch (_) {
+              opening = generateLocalDynamicOpening(world);
+            }
+          } else {
+            await new Promise((r) => setTimeout(r, 240));
+            opening = generateLocalDynamicOpening(world);
+          }
+
+          setSession((prev) => {
+            if (prev.sessionId !== loadingSession.sessionId) return prev;
+            const nextLoc = opening.location || prev.location;
+            const nextMood = opening.mood || prev.mood;
+            const nextObj = opening.objective || prev.objective;
+            const updatedCast = (prev.cast || []).map((c) => (c.isPrimary ? { ...c, mood: nextMood } : c));
+            const updatedMap = prev.map
+              ? { ...prev.map, nodes: prev.map.nodes.map((n, idx) => (idx === 0 ? { ...n, name: nextLoc } : n)) }
+              : prev.map;
+            const updatedRpg = prev.rpg
+              ? { ...prev.rpg, quests: prev.rpg.quests.map((q, idx) => (idx === 0 ? { ...q, title: nextObj } : q)) }
+              : prev.rpg;
+
+            return {
+              ...prev,
+              location: nextLoc,
+              mood: nextMood,
+              objective: nextObj,
+              cast: updatedCast,
+              map: updatedMap,
+              rpg: updatedRpg,
+              memories: [
+                `เริ่มต้นเรื่องราวใน "${world.title}" ณ ${nextLoc} (${opening.scenarioTag || 'ฉากเปิดใหม่'})`,
+                updatedCast[0] ? `พบกับ ${updatedCast[0].name} (${updatedCast[0].role})` : 'เริ่มต้นการเดินทางแบบฉายเดี่ยว (Solo Journey)',
+              ],
+              messages: [
+                {
+                  id: `narrator-init-${Date.now()}`,
+                  sender: 'narrator',
+                  turn: 1,
+                  text: opening.openingNarration,
+                  emotion: opening.emotion || detectEmotionFromText(opening.openingNarration, nextMood).key,
+                  scenarioTag: opening.scenarioTag || 'ฉากเปิดสุ่มใหม่',
+                  engineLabel: opening.engineLabel || 'DYNAMIC OPENING',
+                },
+              ],
+              suggestedActions:
+                Array.isArray(opening.suggestedActions) && opening.suggestedActions.length >= 2
+                  ? opening.suggestedActions.slice(0, 3)
+                  : prev.suggestedActions,
+            };
+          });
+          showToast(`เริ่มรอบใหม่: ${opening.scenarioTag || world.title}`, 'success');
+        } finally {
+          setIsGeneratingOpening(false);
+        }
+      };
+
+      const handleSelectWorld = (world) => {
+        const prevSnippet = session?.world?.id === world.id ? session?.messages?.[0]?.text || '' : '';
+        startWorldWithDynamicOpening(world, { prevSnippet });
+      };
+
+      const openWorldCustomizer = (world) => {
+        setCustomizeDraft({
+          ...world,
+          hasCompanion: world.hasCompanion !== false && Boolean(world.companion?.name),
+          worldBoundaries: world.worldBoundaries || world.worldRules || '',
+          toneTags: Array.isArray(world.toneTags) ? [...world.toneTags] : [],
+          protagonist: { gender: 'ชาย', ...world.protagonist },
+          companion: world.companion
+            ? { gender: 'หญิง', ...world.companion }
+            : { name: '', gender: 'หญิง', role: 'พันธมิตร', appearance: '', personality: 'เป็นธรรมชาติ', initialMood: 'สังเกตการณ์' },
+          itemsText: (world.initialItems || []).join(', '),
+        });
+        setSaveCustomizedAsCopy(false);
+        setMobileSidebarOpen(false);
+        setShowCustomizeModal(true);
+      };
+
+      const handleLaunchCustomizedWorld = (e) => {
+        if (e) e.preventDefault();
+        if (!customizeDraft) return;
+        const parsedItems = (customizeDraft.itemsText || '').split(',').map((s) => s.trim()).filter(Boolean);
+        const compObj = customizeDraft.hasCompanion
+          ? {
+              ...customizeDraft.companion,
+              name: (customizeDraft.companion?.name || '').trim() || 'คู่บทบาทนิรนาม',
+              gender: customizeDraft.companion?.gender || 'ไม่ระบุ',
+            }
+          : null;
+        const finalWorld = {
+          ...customizeDraft,
+          id: saveCustomizedAsCopy ? `custom-${Date.now()}` : customizeDraft.id,
+          isCustom: saveCustomizedAsCopy ? true : Boolean(customizeDraft.isCustom),
+          badge: saveCustomizedAsCopy ? 'CUSTOM EDITION' : customizeDraft.badge || 'ANIME WORLD',
+          title: (customizeDraft.title || 'โลกอนิเมะใหม่').trim(),
+          worldBoundaries: (customizeDraft.worldBoundaries || customizeDraft.worldRules || '').trim(),
+          initialItems: parsedItems,
+          companion: compObj,
+        };
+        delete finalWorld.itemsText;
+        if (saveCustomizedAsCopy) setCustomWorlds((prev) => [finalWorld, ...prev]);
+        setShowCustomizeModal(false);
+        startWorldWithDynamicOpening(finalWorld);
+      };
+
+      const resetCreatorForm = () => {
+        setAiWorldPrompt('');
+        setFormWorldTitle('');
+        setFormGenre('Dark Fantasy • Action • Romance');
+        setFormWorldRules('');
+        setFormWorldBoundaries('');
+        setFormPowerSystem('');
+        setFormProName('');
+        setFormProGender('ชาย');
+        setFormProAppearance('');
+        setFormCompName('');
+        setFormCompGender('หญิง');
+        setFormCompRole('');
+        setFormCompAppearance('');
+        setFormCompPersona('');
+        setFormLocation('ลานกว้างใต้แสงจันทร์');
+        setFormOpening('');
+        setFormScenarioTag('');
+        setFormInitSuggestions([]);
+        setFormInitItems([]);
+        setFormAiReady(false);
+        setShowAdvancedCreator(false);
+      };
+
+      const buildWorldDraftWithAi = async () => {
+        const cleanProName = formProName.trim();
+        if (!cleanProName) {
+          showToast('กรุณากรอกชื่อตัวเอกของคุณก่อนครับ', 'error');
+          return null;
+        }
+        setIsBuildingWorldAi(true);
+        try {
+          let built;
+          if (settings.aiEnabled) {
+            try {
+              built = await callGeminiWorldBuilder({
+                promptText: aiWorldPrompt.trim() || `${formGenre} ที่มีปริศนาและการตัดสินใจเข้มข้น`,
+                proName: cleanProName,
+                proGender: formProGender,
+                hasCompanion: formHasCompanion,
+                compName: formCompName.trim(),
+                compGender: formCompGender,
+                boundaries: formWorldBoundaries.trim(),
+                settings,
+              });
+            } catch (_) {
+              built = buildLocalWorldFromPrompt({
+                promptText: aiWorldPrompt.trim(),
+                proName: cleanProName,
+                proGender: formProGender,
+                hasCompanion: formHasCompanion,
+                compName: formCompName.trim(),
+                compGender: formCompGender,
+                boundaries: formWorldBoundaries.trim(),
+              });
+              showToast('ใช้เอนจินสร้างโลกออฟไลน์แทนชั่วคราว', 'info');
+            }
+          } else {
+            built = buildLocalWorldFromPrompt({
+              promptText: aiWorldPrompt.trim(),
+              proName: cleanProName,
+              proGender: formProGender,
+              hasCompanion: formHasCompanion,
+              compName: formCompName.trim(),
+              compGender: formCompGender,
+              boundaries: formWorldBoundaries.trim(),
+            });
+          }
+
+          setFormWorldTitle(built.title || '');
+          setFormGenre(built.genre || 'Anime Roleplay');
+          setFormWorldRules(built.worldRules || '');
+          setFormWorldBoundaries(built.worldBoundaries || formWorldBoundaries.trim() || built.worldRules || '');
+          setFormPowerSystem(built.powerSystem || '');
+          setFormLocation(built.location || 'ลานกว้างกลางเมือง');
+          setFormProAppearance(built.protagonist?.appearance || '');
+          if (formHasCompanion && built.companion) {
+            setFormCompName(built.companion.name || '');
+            setFormCompGender(built.companion.gender || formCompGender);
+            setFormCompRole(built.companion.role || '');
+            setFormCompAppearance(built.companion.appearance || '');
+            setFormCompPersona(built.companion.personality || '');
+          }
+          setFormOpening(built.openingNarration || '');
+          setFormScenarioTag(built.scenarioTag || 'บทเริ่มต้นแห่งโชคชะตา');
+          setFormInitSuggestions(Array.isArray(built.initialSuggestions) ? built.initialSuggestions : []);
+          setFormInitItems(Array.isArray(built.initialItems) && built.initialItems.length > 0 ? built.initialItems : ['ของติดตัวประจำกาย']);
+          setFormAiReady(true);
+          return built;
+        } finally {
+          setIsBuildingWorldAi(false);
+        }
+      };
+
+      const handleAiBuildWorld = async () => {
+        const built = await buildWorldDraftWithAi();
+        if (built) showToast('AI ออกแบบโลกและตัวละครให้เรียบร้อยแล้ว! กดเข้าเล่นหรือปรับแก้เพิ่มเติมได้เลย', 'success');
+      };
+
+      const handleCreateCustomWorld = async (e) => {
+        e.preventDefault();
+        if (isBuildingWorldAi) return;
+        if (!formProName.trim()) {
+          showToast('กรุณากรอกชื่อตัวเอกของคุณก่อนครับ', 'error');
+          return;
+        }
+
+        let built = null;
+        if (!formAiReady || !formWorldTitle.trim()) {
+          built = await buildWorldDraftWithAi();
+          if (!built) return;
+        }
+
+        const finalTitle = (built?.title || formWorldTitle).trim() || 'โลกอนิเมะใหม่';
+        const finalGenre = (built?.genre || formGenre).trim() || 'Anime Roleplay';
+        const finalRules = (built?.worldRules || formWorldRules).trim() || 'ดำเนินเรื่องตามการตัดสินใจของผู้เล่นอย่างอิสระ';
+        const finalBoundaries = (built?.worldBoundaries || formWorldBoundaries || finalRules).trim();
+        const finalPower = (built?.powerSystem || formPowerSystem).trim() || 'พัฒนาตามการกระทำของผู้เล่น';
+        const finalLoc = (built?.location || formLocation).trim() || 'ลานกว้างใต้แสงจันทร์';
+        const finalItems = built?.initialItems?.length ? built.initialItems : formInitItems.length ? formInitItems : ['ของติดตัวประจำกาย'];
+        const finalOpening = (built?.openingNarration || formOpening).trim();
+        const finalSuggestions = built?.initialSuggestions?.length ? built.initialSuggestions : formInitSuggestions;
+
+        const compData = formHasCompanion
+          ? {
+              name: (built?.companion?.name || formCompName).trim() || 'คู่บทบาทนิรนาม',
+              gender: built?.companion?.gender || formCompGender || 'ไม่ระบุ',
+              role: (built?.companion?.role || formCompRole).trim() || 'คู่บทบาทหลัก',
+              appearance: (built?.companion?.appearance || formCompAppearance).trim(),
+              personality: (built?.companion?.personality || formCompPersona).trim() || 'มีเอกลักษณ์และน่าค้นหา',
+              initialMood: built?.companion?.initialMood || 'สนใจ',
+            }
+          : null;
+
+        const newWorld = {
+          id: `custom-${Date.now()}`,
+          title: finalTitle,
+          badge: formHasCompanion ? 'AI WORLD' : 'AI SOLO JOURNEY',
+          isCustom: true,
+          isSandbox: false,
+          hasCompanion: formHasCompanion,
+          accentHex: '#7c5cff',
+          genre: finalGenre,
+          toneTags: [],
+          worldRules: finalRules,
+          worldBoundaries: finalBoundaries,
+          powerSystem: finalPower,
+          location: finalLoc,
+          initialObjective: built?.initialObjective || 'เริ่มต้นการผจญภัยและค้นหาความจริงของโลกนี้',
+          initialItems: finalItems,
+          scenarioTag: built?.scenarioTag || formScenarioTag || 'ฉากเปิดเฉพาะรอบนี้',
+          protagonist: {
+            name: formProName.trim(),
+            gender: formProGender,
+            role: built?.protagonist?.role || 'เริ่มต้นเส้นทาง (พัฒนาตามการกระทำ)',
+            appearance: (built?.protagonist?.appearance || formProAppearance).trim(),
+            persona: built?.protagonist?.persona || 'ปรับเปลี่ยนตามการตัดสินใจของคุณ',
+          },
+          companion: compData,
+          openingNarration: finalOpening,
+          initialSuggestions: finalSuggestions.length > 0 ? finalSuggestions : [],
+        };
+
+        setCustomWorlds((prev) => [newWorld, ...prev]);
+        setShowCreatorModal(false);
+        resetCreatorForm();
+        startWorldWithDynamicOpening(newWorld, { skipDynamicCall: Boolean(finalOpening) });
+      };
+
+      const handleGeneratePortraitAi = async (charKey, name, appearance, role, mood, gender = '', silent = false) => {
+        if (generatingPortraits[charKey]) return;
+        setGeneratingPortraits((prev) => ({ ...prev, [charKey]: true }));
+        try {
+          const recentStoryContext = (session.messages || [])
+            .slice(-2)
+            .map((m) => m.text)
+            .join(' ')
+            .replace(/\s+/g, ' ')
+            .slice(0, 260);
+          const worldContext = `${session.world?.title || ''} (${session.world?.genre || 'Anime'}) at ${session.location || ''}`;
+          const prompt = `Authentic high-budget Japanese TV anime character portrait (Ufotable / Kyoto Animation cel-shaded key visual style), vibrant expressive anime eyes, clean fine lineart, cinematic rim lighting, head-and-shoulders close-up portrait. Character Name: ${name}. Gender: ${gender || 'matching appearance'}. Role: ${role || 'anime protagonist'}. Visual Appearance: ${appearance || 'stylish anime character matching the world'}. World Setting: ${worldContext}. Current Mood: ${mood || 'calm'}. Story Description Context: ${recentStoryContext}. Strictly pure anime illustration, no text, no watermark, no 3D render.`;
+          const url = await generateAiImageWithGemini(prompt, settings.geminiApiKey);
+          setPortraitImages((prev) => ({ ...prev, [charKey]: url }));
+          if (!silent) showToast(`วาดรูปโปรไฟล์อนิเมะของ "${name}" ตามเนื้อเรื่องเรียบร้อยแล้ว`, 'success');
+        } catch (_) {
+          if (!silent) showToast('ไม่สามารถสร้างรูปโปรไฟล์ AI ได้ในขณะนี้ (ใช้ภาพ SVG Cel-Shading แทน)', 'info');
+        } finally {
+          setGeneratingPortraits((prev) => ({ ...prev, [charKey]: false }));
+        }
+      };
+
+      // Auto-generate real anime portraits based on story & character descriptions
+      useEffect(() => {
+        if (!settings.aiEnabled || !session?.world || isGeneratingOpening) return;
+        const pro = session.world.protagonist;
+        const proCacheKey = `${session.sessionId}:protagonist:${pro?.name || ''}`;
+        if (pro?.name && !portraitImages['protagonist'] && !autoPortraitKeysRef.current.has(proCacheKey)) {
+          autoPortraitKeysRef.current.add(proCacheKey);
+          handleGeneratePortraitAi('protagonist', pro.name, pro.appearance, pro.role, pro.persona, pro.gender, true);
+        }
+        const comp = session.cast?.[0];
+        if (comp?.name) {
+          const compCacheKey = `${session.sessionId}:${comp.id}:${comp.name}`;
+          if (!portraitImages[comp.id] && !autoPortraitKeysRef.current.has(compCacheKey)) {
+            autoPortraitKeysRef.current.add(compCacheKey);
+            handleGeneratePortraitAi(comp.id, comp.name, comp.appearance, comp.role, comp.mood || session.mood, comp.gender, true);
+          }
+        }
+      }, [session?.sessionId, session?.cast?.[0]?.id, settings.aiEnabled, isGeneratingOpening]);
+<!-- ... existing code ... -->
+      const handleResetWorld = () => {
+        if (isGenerating || isGeneratingOpening) return;
+        const prevSnippet = session.messages?.[0]?.text || '';
+        showToast(`กำลังรีเซ็ตและสุ่มฉากเปิดเรื่องใหม่ใน "${session.world.title}"...`, 'info');
+        startWorldWithDynamicOpening(session.world, { prevSnippet });
+      };
+
+      const handleRefreshSuggestions = async () => {
+<!-- ... existing code ... -->
+                      <AnimePortrait
+                        name={primaryCast?.name || session.world.protagonist.name}
+                        appearance={primaryCast?.appearance || session.world.protagonist.appearance}
+                        role={primaryCast?.role || session.world.protagonist.role}
+                        gender={primaryCast?.gender || session.world.protagonist.gender}
+                        mood={session.mood}
+                        emotionKey={latestNarratorMsg?.emotion}
+<!-- ... existing code ... -->
+                        <div className="relative z-10">
+                          <AnimePortrait
+                            size="lg"
+                            name={primaryCast ? primaryCast.name : session.world.protagonist.name}
+                            appearance={primaryCast ? primaryCast.appearance : session.world.protagonist.appearance}
+                            role={primaryCast ? primaryCast.role : session.world.protagonist.role}
+                            gender={primaryCast ? primaryCast.gender : session.world.protagonist.gender}
+                            mood={session.mood}
+                            emotionKey={latestNarratorMsg.emotion}
+                            tension={session.tension}
+                            customImageUrl={portraitImages[primaryCast ? primaryCast.id : 'protagonist']}
+                            isGenerating={Boolean(generatingPortraits[primaryCast ? primaryCast.id : 'protagonist'])}
+                            onGenerateAi={() =>
+                              handleGeneratePortraitAi(
+                                primaryCast ? primaryCast.id : 'protagonist',
+                                primaryCast ? primaryCast.name : session.world.protagonist.name,
+                                primaryCast ? primaryCast.appearance : session.world.protagonist.appearance,
+                                primaryCast ? primaryCast.role : session.world.protagonist.role,
+                                session.mood,
+                                primaryCast ? primaryCast.gender : session.world.protagonist.gender
+                              )
+                            }
+                          />
+                        </div>
+<!-- ... existing code ... -->
+                                <AnimePortrait
+                                  size="sm"
+                                  name={primaryCast ? primaryCast.name : session.world.protagonist.name}
+                                  appearance={primaryCast ? primaryCast.appearance : session.world.protagonist.appearance}
+                                  role={primaryCast ? primaryCast.role : session.world.protagonist.role}
+                                  gender={primaryCast ? primaryCast.gender : session.world.protagonist.gender}
+                                  mood={session.mood}
+                                  emotionKey={nEmo.key}
+                                  tension={session.tension}
+                                  customImageUrl={portraitImages[primaryCast ? primaryCast.id : 'protagonist']}
+                                  isGenerating={Boolean(generatingPortraits[primaryCast ? primaryCast.id : 'protagonist'])}
+                                />
+                                <div>
+                                  <div className="flex items-center gap-1.5 flex-wrap">
+                                    <span className="px-1.5 py-0.5 rounded bg-accent/20 text-accentSoft font-mono text-[10px] font-semibold">EP.{msg.turn}</span>
+                                    <span className="font-semibold text-white">{primaryCast ? primaryCast.name : 'ผู้บรรยาย'}</span>
+                                    {msg.scenarioTag && (
+                                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-lumen/15 text-lumen border border-lumen/35 inline-flex items-center gap-1">
+                                        <span>🎲</span>
+                                        <span>{msg.scenarioTag}</span>
+                                      </span>
+                                    )}
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium border inline-flex items-center gap-1 animate-badge-pop ${nEmo.badgeClass}`}>
+                                      <span>{nEmo.emoji}</span>
+                                      <span>{nEmo.label}</span>
+                                    </span>
+                                  </div>
+                                  <span className="text-[10px] text-amber-300">{session.mood}</span>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-1.5">
+                                {msg.turn === 1 && session.messages.length === 1 && !msg.isOpeningLoading && (
+                                  <button type="button" disabled={isGeneratingOpening} onClick={handleResetWorld} className="px-2 py-0.5 rounded-md bg-lumen/15 hover:bg-lumen/25 text-[11px] text-lumen border border-lumen/40 inline-flex items-center gap-1" title="สุ่มสถานการณ์และบทสนทนาเปิดเรื่องใหม่ภายใต้ขอบเขตโลกนี้">
+                                    <Icon name="refresh" className={`w-3 h-3 ${isGeneratingOpening ? 'animate-spin' : ''}`} />
+                                    <span>สุ่มฉากเปิดใหม่</span>
+                                  </button>
+                                )}
+                                <button type="button" onClick={() => handleSpeakThai(msg)} className={`px-2 py-0.5 rounded-md border text-[11px] inline-flex items-center gap-1 ${speakingMsgId === msg.id ? 'bg-lumen/20 border-lumen text-lumen' : 'bg-elevated border-rim text-slate-300 hover:text-white'}`} title="เสียงพากย์ภาษาไทย">
+<!-- ... existing code ... -->
+                    <AnimePortrait
+                      name={session.world.protagonist.name}
+                      appearance={session.world.protagonist.appearance}
+                      role={session.world.protagonist.role}
+                      gender={session.world.protagonist.gender}
+                      mood={session.world.protagonist.persona}
+                      emotionKey={session.messages.filter((m) => m.sender === 'player').slice(-1)[0]?.emotion}
+                      customImageUrl={portraitImages['protagonist']}
+                      isGenerating={Boolean(generatingPortraits['protagonist'])}
+                      onGenerateAi={() => handleGeneratePortraitAi('protagonist', session.world.protagonist.name, session.world.protagonist.appearance, session.world.protagonist.role, session.world.protagonist.persona, session.world.protagonist.gender)}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-bold text-sm text-white truncate">{session.world.protagonist.name}</span>
+                        {session.world.protagonist.gender && (
+                          <span className="px-1.5 py-0.5 rounded bg-surface border border-rim text-[9px] font-mono text-slate-300 shrink-0">{session.world.protagonist.gender}</span>
+                        )}
+                      </div>
+                      <div className="text-xs text-lumen truncate">{session.world.protagonist.role}</div>
+                    </div>
+<!-- ... existing code ... -->
+                          <AnimePortrait
+                            size="sm"
+                            name={char.name}
+                            appearance={char.appearance}
+                            role={char.role}
+                            gender={char.gender}
+                            mood={char.mood}
+                            emotionKey={char.isPrimary ? latestNarratorMsg?.emotion : undefined}
+                            tension={session.tension}
+                            customImageUrl={portraitImages[char.id]}
+                            isGenerating={Boolean(generatingPortraits[char.id])}
+                            onGenerateAi={() => handleGeneratePortraitAi(char.id, char.name, char.appearance, char.role, char.mood, char.gender)}
+                          />
+<!-- ... existing code ... -->
+          {/* =================================================================
+              MODAL 1: AI-FIRST WORLD & CHARACTER CREATOR (NAME & GENDER + OPTIONAL COMPANION)
+          ================================================================= */}
+          {showCreatorModal && (
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 overflow-y-auto">
+              <div className="bg-surface border border-rim rounded-2xl max-w-2xl w-full p-5 shadow-2xl animate-modal my-auto max-h-[92vh] overflow-y-auto space-y-4">
+                <div className="flex items-center justify-between border-b border-rim pb-3">
+                  <div>
+                    <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                      <Icon name="sparkles" className="w-5 h-5 text-lumen" /> สร้างโลก & ตัวละครด้วย AI
+                    </h2>
+                    <p className="text-xs text-slate-400">คุณกำหนดเพียงชื่อ เพศ และไอเดียโลก — ที่เหลือ AI จะออกแบบรายละเอียดและสุ่มฉากเปิดใหม่ทุกครั้งที่เริ่มเล่น</p>
+                  </div>
+                  <button type="button" onClick={() => setShowCreatorModal(false)} className="px-2.5 py-1 rounded-lg bg-elevated text-xs text-slate-300">ปิด</button>
+                </div>
+
+                <form onSubmit={handleCreateCustomWorld} className="space-y-4">
+                  {/* STEP 1: PLAYER NAME & GENDER (REQUIRED) */}
+                  <div className="rounded-xl bg-elevated/70 border border-rim p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono text-lumen uppercase">1. ตัวตนของตัวเอก (ผู้เล่นเลือกเอง)</span>
+                      <span className="text-[10px] text-slate-400">รูปลักษณ์ สายพลัง และนิสัย AI ช่วยออกแบบให้</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] text-slate-300 mb-1">ชื่อตัวเอก *</label>
+                        <input
+                          type="text"
+                          required
+                          value={formProName}
+                          onChange={(e) => setFormProName(e.target.value)}
+                          placeholder="เช่น เร็น, ยูกิ, อารอน..."
+                          className="w-full rounded-xl bg-obsidian/80 border border-rim px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] text-slate-300 mb-1">เพศตัวเอก *</label>
+                        <div className="grid grid-cols-3 gap-1.5">
+                          {GENDER_OPTIONS.map((g) => (
+                            <button
+                              key={g}
+                              type="button"
+                              onClick={() => setFormProGender(g)}
+                              className={`py-2 rounded-xl text-xs font-semibold border transition ${
+                                formProGender === g
+                                  ? 'bg-accent text-white border-accent shadow-md shadow-accent/25'
+                                  : 'bg-obsidian/70 text-slate-300 border-rim hover:border-slate-500'
+                              }`}
+                            >
+                              {g}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* STEP 2: OPTIONAL COMPANION */}
+                  <div className="rounded-xl bg-elevated/70 border border-rim p-4 space-y-3">
+                    <div className="text-xs font-mono text-rose-300 uppercase">2. คู่บทบาทเริ่มต้น (เลือกเพิ่มหรือไม่เพิ่มก็ได้)</div>
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <button
+                        type="button"
+                        onClick={() => setFormHasCompanion(false)}
+                        className={`p-3 rounded-xl border text-left transition ${
+                          !formHasCompanion
+                            ? 'bg-lumen/15 border-lumen text-white shadow'
+                            : 'bg-obsidian/60 border-rim text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="text-xs font-bold">🧭 ฉายเดี่ยว (Solo Journey)</div>
+                        <div className="text-[11px] opacity-80 mt-0.5">เริ่มเรื่องคนเดียว ค่อยเจอผู้คนใหม่ในเนื้อเรื่อง</div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFormHasCompanion(true)}
+                        className={`p-3 rounded-xl border text-left transition ${
+                          formHasCompanion
+                            ? 'bg-rose-500/20 border-rose-400 text-white shadow'
+                            : 'bg-obsidian/60 border-rim text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="text-xs font-bold">🤝 มีคู่บทบาทเริ่มต้น</div>
+                        <div className="text-[11px] opacity-80 mt-0.5">ให้ AI สร้างคู่หูให้ (กำหนดชื่อ/เพศเพิ่มได้)</div>
+                      </button>
+                    </div>
+
+                    {formHasCompanion && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-rim/60">
+                        <div>
+                          <label className="block text-[11px] text-slate-300 mb-1">ชื่อคู่บทบาท (เว้นว่างให้ AI ตั้งให้)</label>
+                          <input
+                            type="text"
+                            value={formCompName}
+                            onChange={(e) => setFormCompName(e.target.value)}
+                            placeholder="เว้นว่าง = ให้ AI คิดชื่อให้"
+                            className="w-full rounded-xl bg-obsidian/80 border border-rim px-3 py-2 text-sm text-white focus:border-rose-400 focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] text-slate-300 mb-1">เพศคู่บทบาท</label>
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {GENDER_OPTIONS.map((g) => (
+                              <button
+                                key={g}
+                                type="button"
+                                onClick={() => setFormCompGender(g)}
+                                className={`py-2 rounded-xl text-xs font-semibold border transition ${
+                                  formCompGender === g
+                                    ? 'bg-rose-500/80 text-white border-rose-400'
+                                    : 'bg-obsidian/70 text-slate-300 border-rim hover:border-slate-500'
+                                }`}
+                              >
+                                {g}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* STEP 3: AI WORLD CONCEPT & BOUNDARIES */}
+                  <div className="rounded-xl bg-gradient-to-br from-accent/15 to-lumen/10 border border-accent/40 p-4 space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-mono text-accentSoft uppercase">3. ไอเดียโลก & ขอบเขต (AI ช่วยสร้างเป็นหลัก)</span>
+                      <span className="text-[10px] font-mono text-lumen">AI-POWERED</span>
+                    </div>
+
+                    <textarea
+                      rows={3}
+                      value={aiWorldPrompt}
+                      onChange={(e) => { setAiWorldPrompt(e.target.value); setFormAiReady(false); }}
+                      placeholder="บอกไอเดียโลกที่อยากเล่นได้เลย เช่น 'โลกแฟนตาซีที่ดวงอาทิตย์ดับไป 100 ปี เมืองทั้งหมดอยู่บนรถไฟยักษ์ที่วิ่งฝ่าหิมะและอสูรเงา' หรือปล่อยว่างแล้วกดให้ AI สุ่มโลกให้..."
+                      className="w-full rounded-xl bg-obsidian/85 border border-rim px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:border-lumen focus:outline-none"
+                    />
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {SANDBOX_GENRE_CHIPS.slice(0, 8).map((chip) => (
+                        <button
+                          key={chip}
+                          type="button"
+                          onClick={() => { setAiWorldPrompt((prev) => (prev.includes(chip) ? prev : `${prev ? prev + ' ' : ''}[${chip}]`)); setFormAiReady(false); }}
+                          className="px-2 py-0.5 rounded-lg bg-obsidian/70 hover:bg-accent/25 border border-rim text-[11px] text-slate-300"
+                        >
+                          + {chip}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] text-slate-300 mb-1">ขอบเขตของโลก / สิ่งที่ห้ามหลุดธีม (ไม่บังคับ — AI ใช้คุมโทนตอนเริ่มใหม่ทุกครั้ง)</label>
+                      <input
+                        type="text"
+                        value={formWorldBoundaries}
+                        onChange={(e) => setFormWorldBoundaries(e.target.value)}
+                        placeholder="เช่น คุมธีมดาร์กแฟนตาซียุคกลาง ไม่มีปืนสมัยใหม่ เน้นการเอาตัวรอด..."
+                        className="w-full rounded-xl bg-obsidian/80 border border-rim px-3 py-2 text-xs sm:text-sm text-white focus:border-lumen focus:outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      disabled={isBuildingWorldAi}
+                      onClick={handleAiBuildWorld}
+                      className="w-full py-2.5 rounded-xl bg-elevated hover:bg-rim border border-lumen/50 text-lumen text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 disabled:opacity-50"
+                    >
+                      <Icon name={isBuildingWorldAi ? 'refresh' : 'sparkles'} className={`w-4 h-4 ${isBuildingWorldAi ? 'animate-spin' : ''}`} />
+                      <span>{isBuildingWorldAi ? 'AI กำลังออกแบบโลก ตัวละคร และฉากเปิดเรื่อง...' : '✨ ให้ AI สร้างพรีวิวโลก & ตัวละครก่อน'}</span>
+                    </button>
+                  </div>
+
+                  {/* AI GENERATED PREVIEW SUMMARY */}
+                  {formAiReady && (
+                    <div className="rounded-xl bg-obsidian/75 border border-emerald-500/40 p-3.5 space-y-2 animate-entry">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-mono text-emerald-300">✓ AI ออกแบบโลกเรียบร้อยแล้ว</span>
+                        <button type="button" onClick={() => setShowAdvancedCreator((v) => !v)} className="text-[11px] text-lumen hover:underline">
+                          {showAdvancedCreator ? 'ซ่อนช่องแก้ไขละเอียด' : 'แก้ไขรายละเอียดเอง'}
+                        </button>
+                      </div>
+                      <div className="text-sm font-bold text-white">{formWorldTitle} <span className="text-xs font-normal text-accentSoft">({formGenre})</span></div>
+                      <p className="text-xs text-slate-300">{formWorldRules}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-400 pt-1 border-t border-rim/50">
+                        <div><span className="text-lumen">รูปลักษณ์ตัวเอก:</span> {formProAppearance || 'ตามเนื้อเรื่อง'}</div>
+                        <div><span className="text-amber-300">ระบบพลัง:</span> {formPowerSystem || 'พัฒนาตามการกระทำ'}</div>
+                        {formHasCompanion && (
+                          <div className="sm:col-span-2"><span className="text-rose-300">คู่บทบาท:</span> {formCompName} ({formCompGender}) — {formCompRole} • {formCompAppearance}</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* OPTIONAL COLLAPSIBLE ADVANCED FIELDS */}
+                  {(showAdvancedCreator || (!formAiReady && showAdvancedCreator)) && (
+                    <div className="rounded-xl bg-elevated/50 border border-rim p-3.5 space-y-2.5">
+                      <div className="text-[11px] font-mono text-slate-400">ปรับแก้รายละเอียดขั้นสูง (ไม่จำเป็นต้องกรอกเอง)</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <input type="text" value={formWorldTitle} onChange={(e) => setFormWorldTitle(e.target.value)} placeholder="ชื่อโลก" className="rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                        <input type="text" value={formGenre} onChange={(e) => setFormGenre(e.target.value)} placeholder="แนวเรื่อง" className="rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                        <input type="text" value={formPowerSystem} onChange={(e) => setFormPowerSystem(e.target.value)} placeholder="ระบบพลัง" className="rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                        <input type="text" value={formProAppearance} onChange={(e) => setFormProAppearance(e.target.value)} placeholder="รูปลักษณ์ตัวเอก" className="rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                      </div>
+                      <input type="text" value={formWorldRules} onChange={(e) => setFormWorldRules(e.target.value)} placeholder="กฎของโลก" className="w-full rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                      <input type="text" value={formLocation} onChange={(e) => setFormLocation(e.target.value)} placeholder="สถานที่เปิดฉาก" className="w-full rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                      {formHasCompanion && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                          <input type="text" value={formCompRole} onChange={(e) => setFormCompRole(e.target.value)} placeholder="บทบาทคู่บทบาท" className="rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                          <input type="text" value={formCompAppearance} onChange={(e) => setFormCompAppearance(e.target.value)} placeholder="รูปลักษณ์คู่บทบาท" className="rounded-lg bg-surface border border-rim px-3 py-1.5 text-xs text-white" />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-rim">
+                    <button type="button" onClick={() => setShowAdvancedCreator((v) => !v)} className="text-xs text-slate-400 hover:text-slate-200">
+                      {showAdvancedCreator ? 'ซ่อนตัวเลือกขั้นสูง' : 'ปรับแก้รายละเอียดเอง (ขั้นสูง)'}
+                    </button>
+                    <div className="flex gap-2">
+                      <button type="button" onClick={() => setShowCreatorModal(false)} className="px-4 py-2 rounded-xl bg-elevated text-sm text-slate-300">ยกเลิก</button>
+                      <button type="submit" disabled={isBuildingWorldAi} className="px-5 py-2 rounded-xl bg-gradient-to-r from-accent to-lumen text-sm font-semibold text-white shadow-lg disabled:opacity-50">
+                        {isBuildingWorldAi ? 'กำลังสร้างโลก...' : formAiReady ? 'เข้าเล่นโลกนี้เลย' : '✨ ให้ AI สร้างและเข้าเล่นทันที'}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* =================================================================
+              MODAL 2: PRE-PLAY WORLD CUSTOMIZER
+          ================================================================= */}
+          {showCustomizeModal && customizeDraft && (
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 overflow-y-auto">
+              <div className="bg-surface border border-rim rounded-2xl max-w-2xl w-full p-5 shadow-2xl animate-modal my-auto max-h-[90vh] overflow-y-auto space-y-4">
+                <div className="flex items-center justify-between border-b border-rim pb-3">
+                  <div>
+                    <h2 className="text-base sm:text-lg font-bold text-white">ปรับแต่งก่อนเริ่มรอบใหม่: {customizeDraft.title}</h2>
+                    <p className="text-xs text-slate-400">ทุกครั้งที่กดเริ่มเล่น AI จะสุ่มสถานการณ์และบทสนทนาเปิดฉากใหม่ภายใต้ขอบเขตโลกนี้</p>
+                  </div>
+                  <button type="button" onClick={() => setShowCustomizeModal(false)} className="px-2.5 py-1 rounded-lg bg-elevated text-xs text-slate-300">ปิด</button>
+                </div>
+                <form onSubmit={handleLaunchCustomizedWorld} className="space-y-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] text-slate-400 mb-1">ชื่อตัวเอก</label>
+                      <input type="text" required value={customizeDraft.protagonist.name} onChange={(e) => setCustomizeDraft((p) => ({ ...p, protagonist: { ...p.protagonist, name: e.target.value } }))} placeholder="ชื่อตัวเอก" className="w-full rounded-xl bg-elevated border border-rim px-3 py-2 text-sm text-white" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-slate-400 mb-1">เพศตัวเอก</label>
+                      <div className="grid grid-cols-3 gap-1.5">
+                        {GENDER_OPTIONS.map((g) => (
+                          <button
+                            key={g}
+                            type="button"
+                            onClick={() => setCustomizeDraft((p) => ({ ...p, protagonist: { ...p.protagonist, gender: g } }))}
+                            className={`py-2 rounded-xl text-xs font-semibold border ${
+                              (customizeDraft.protagonist.gender || 'ชาย') === g
+                                ? 'bg-accent text-white border-accent'
+                                : 'bg-elevated text-slate-300 border-rim'
+                            }`}
+                          >
+                            {g}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" value={customizeDraft.title} onChange={(e) => setCustomizeDraft((p) => ({ ...p, title: e.target.value }))} className="rounded-xl bg-elevated border border-rim px-3 py-2 text-sm text-white" placeholder="ชื่อโลก" />
+                    <input type="text" value={customizeDraft.location} onChange={(e) => setCustomizeDraft((p) => ({ ...p, location: e.target.value }))} className="rounded-xl bg-elevated border border-rim px-3 py-2 text-sm text-white" placeholder="สถานที่หลักอ้างอิง" />
+                  </div>
+
+                  <textarea rows={2} value={customizeDraft.worldBoundaries || ''} onChange={(e) => setCustomizeDraft((p) => ({ ...p, worldBoundaries: e.target.value }))} className="w-full rounded-xl bg-elevated border border-rim px-3 py-2 text-xs sm:text-sm text-white" placeholder="ขอบเขตและกฎเหล็กของโลกนี้ (คุมโทนไม่ให้ฉากเปิดสุ่มหลุดธีม)" />
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {SANDBOX_GENRE_CHIPS.map((tag) => {
+                      const active = (customizeDraft.toneTags || []).includes(tag);
+                      return (
+                        <button key={tag} type="button" onClick={() => setCustomizeDraft((p) => { const n = active ? p.toneTags.filter((t) => t !== tag) : [...(p.toneTags || []), tag]; return { ...p, toneTags: n, genre: n.length ? n.join(' • ') : p.genre }; })} className={`px-2 py-1 rounded-lg text-[11px] border ${active ? 'bg-accent/25 border-accent text-white' : 'bg-elevated border-rim text-slate-400'}`}>
+                          {tag}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="rounded-xl bg-elevated/60 border border-rim p-3 space-y-2.5">
+                    <label className="flex items-center justify-between text-xs text-lumen cursor-pointer">
+                      <span className="font-semibold">มีคู่บทบาทเริ่มต้น (ปิดเพื่อเล่นแบบฉายเดี่ยว Solo)</span>
+                      <input type="checkbox" checked={customizeDraft.hasCompanion} onChange={(e) => setCustomizeDraft((p) => ({ ...p, hasCompanion: e.target.checked }))} className="w-4 h-4 accent-accent" />
+                    </label>
+
+                    {customizeDraft.hasCompanion && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                        <input type="text" value={customizeDraft.companion.name} onChange={(e) => setCustomizeDraft((p) => ({ ...p, companion: { ...p.companion, name: e.target.value } }))} placeholder="ชื่อคู่บทบาท" className="rounded-xl bg-surface border border-rim px-3 py-2 text-sm text-white" />
+                        <div className="grid grid-cols-3 gap-1.5">
+                          {GENDER_OPTIONS.map((g) => (
+                            <button
+                              key={g}
+                              type="button"
+                              onClick={() => setCustomizeDraft((p) => ({ ...p, companion: { ...p.companion, gender: g } }))}
+                              className={`py-2 rounded-xl text-xs font-semibold border ${
+                                (customizeDraft.companion.gender || 'หญิง') === g
+                                  ? 'bg-rose-500/80 text-white border-rose-400'
+                                  : 'bg-surface text-slate-300 border-rim'
+                              }`}
+                            >
+                              {g}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-rim">
+                    <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                      <input type="checkbox" checked={saveCustomizedAsCopy} onChange={(e) => setSaveCustomizedAsCopy(e.target.checked)} className="w-4 h-4 accent-accent" />
+                      <span>บันทึกเก็บไว้ในคลังโลก</span>
+                    </label>
+                    <button type="submit" className="px-5 py-2 rounded-xl bg-gradient-to-r from-accent to-lumen text-sm font-semibold text-white shadow-lg">🎲 สุ่มฉากเปิดใหม่ & เข้าเล่น</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+<!-- ... existing code ... -->
+                    <AnimePortrait
+                      size="sm"
+                      name={session.world.protagonist.name}
+                      appearance={session.world.protagonist.appearance}
+                      role={session.world.protagonist.role}
+                      gender={session.world.protagonist.gender}
+                      mood={session.world.protagonist.persona}
+                      customImageUrl={portraitImages['protagonist']}
+                    />
+<!-- ... existing code ... -->
+    createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
